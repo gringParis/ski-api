@@ -30,7 +30,7 @@ It allows to display all or filter slopes. You can pass 2 parameters:
 
 The query parameter allow you to filters the slopes. The query is composed of 3 elements, an attribute name, an operator and a value.
 let's see 2 exemples of queries
-1. query=name.like( \*couloir\*)
+1. query=name.like( ``*couloir``*)
 It allows to search slopes where the name is like couloir ( it’s like an sql like. so here it means a name containing the word "couloir. It’s case insensitive.
 2. query=ski_difficulty=2
 It allows to search the slopes having a ski difficulties equals to 2.
