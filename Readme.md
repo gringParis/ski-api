@@ -1,25 +1,76 @@
-# Full Stack Developer - Technical Task
+# ski-api
 
-Thanks for applying to work at FATMAP. We have developed this small task for you to work on in your own time so that we can see how you approach tasks and as a discussion point going forwards.
+a simple api allowing to retreive data from a json containing data related to ski slopes.
 
-Try to spend less than two hours on this task - and don't worry if it is not complete, we prefer to see quality over quantity.
+## install
 
-It's totally up to you how to implement the solution, feel free to use the language you feel most comfortable with and any frameworks that you prefer to use.
+1. get the source code
+2. run the following command to install node dependencies
+```sh
+  npm install
+```
 
-## The task
+## use
 
-Using the off-pistes.json (this file contains the off-piste lines in Chamonix) file in this repo, build a service/API that has endpoints do the following.
+use the following command to start your server
+```sh
+  npm start
+```
+you can now query your local local server at the following uri : http://localhost:3000
 
-* Allow searching of an off-piste line by name or partial name.
+# endpoints
 
-* Allow filtering and sorting of off-piste lines by ski_difficulty
+there are 2 endpoints. the first is /off-pistes
 
-* **Bonus task**: Create an endpoint that takes an id param and returns an HTML Canvas object containing the line so that the line could be previewed in a browser. Hint: the data format is [Long, Lat, Elevation] - you can ignore elevation for this.
+## /off-pistes
+it allow to display all or filter slopes.
+you can pass 2 parameters: 
 
-### Notes
+### query:
+the query parameter allow you to filters the slopes. the query is composed of 3 elements, an attribut name, an operator and a value.
+let's see 2 exemples of queries
+1. query=name.like(*couloir*)
+it allows to search slopes where the name is like couloir ( its like an sql like. so here it means a name containing the word "couloir. Its case insensitive.
+2. query=ski_difficulty=2
+it allows to search the slopes having a ski difficulties equals to 2.
 
-* For the above the service should return JSON with id, name, description and ski_difficulty fields.
+Only those 2 operators are available at the moment.
 
-* You don't need to create a front-end for this, bonus marks if you do.
+### sort:
+the sort parameter allow you to sort on an attribute. give the attribute name to sort on this attribute. default sort is ascending for descending sort, you pass -attrName.
+exemples:
+sort=-name will perform a descending sort by name 
+sort=id will perform a ascending sort by id 
 
-* Please create documentation for the steps required to run the project and to access the API. 
+
+### puting all together
+http://localhost:3000/off-pistes?query=name.like(*couloir*)&sort=-name
+http://localhost:3000/off-pistes?query=ski_difficulty=2
+
+the second endpoint is /off-piste
+
+## /off-piste
+it require an id parameter. It return a piece of html representing the slope in 3 dimensions in a 600px * 600px canevas.
+It is based on threejs.
+You can make the slope rotate by left clicking in the canevas.
+You can translate the slope with the right click.
+You can zoom in and out with your mouth wheal.
+Those controls come from OrbitControls.js which a threejs extention
+The canevas is responsive in the sense that if the window dimensions are more little than 600x600, the canevas takes window width/ height
+exemple:
+http://localhost:3000/off-piste?id=6216
+
+
+##errors
+if an error occures, it will be sent with apporpiate status
+there are 3 errors defined
+1. invalid query. Unrecognized operator: the operator in the query parameter has not been recognized...
+2. invalid query. There a more than one = sign. 
+3. internal error
+
+
+### possible ameliorations
+to pass the returned fields as a parameter would have been easy to do, and would have been a good thing imo.
+i could have added easily pagination parameters
+i could have used jade to render the canevas
+i could have splitted a little more the code in app.js
