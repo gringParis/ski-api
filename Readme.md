@@ -73,6 +73,7 @@ Exemple: http://localhost:3000/off-piste?id=6216
 ![slope 3](screenshots/slope3.png)
 ![slope 4](screenshots/slope4.png)
 ![slope 5](screenshots/slope5.png)
+A js error can occure on some browsers, the rendering cannot be seen. 
 
 ##errors
 
